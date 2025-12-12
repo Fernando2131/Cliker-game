@@ -1,12 +1,16 @@
 import sqlite3
+import time
+
+DB_PATH = "database.db"
 
 def get_db():
-    db = sqlite3.connect("database.db")
+    db = sqlite3.connect(DB_PATH, check_same_thread=False)
     db.row_factory = sqlite3.Row
     return db
 
 def init_db():
     db = get_db()
+    # tabla users principal (crea si no existe)
     db.execute("""
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -18,3 +22,43 @@ def init_db():
         )
     """)
     db.commit()
+
+    # migraciones seguras: añadir columnas si no existen
+    def try_add(col_name, col_type, default=None):
+        try:
+            db.execute(f"ALTER TABLE users ADD COLUMN {col_name} {col_type}")
+            if default is not None:
+                db.execute(f"UPDATE users SET {col_name} = ?", (default,))
+            db.commit()
+        except Exception:
+            # columna ya existe o no se puede añadir: ignorar
+            pass
+
+    # columnas para seguridad
+    try_add("last_save_ts", "REAL", 0)          # timestamp del último save
+    try_add("last_coins", "REAL", 0)            # coins en el último save
+    try_add("save_count_min", "INTEGER", 0)     # saves en el último minuto
+    try_add("suspicious_count", "INTEGER", 0)   # contador de sospechas
+    try_add("banned_until", "REAL", 0)          # timestamp hasta el que está baneado (0 = no)
+    try_add("last_ip", "TEXT", "")              # última IP usada
+
+    # tabla de logs de seguridad
+    db.execute("""
+        CREATE TABLE IF NOT EXISTS security_logs (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER,
+            event TEXT,
+            detail TEXT,
+            ip TEXT,
+            ts REAL
+        )
+    """)
+    db.commit()
+
+    # índice para consultas rápidas
+    try:
+        db.execute("CREATE INDEX IF NOT EXISTS idx_security_user ON security_logs(user_id)")
+        db.commit()
+    except Exception:
+        pass
+
