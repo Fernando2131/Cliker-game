@@ -8,6 +8,9 @@ def get_db():
     db.row_factory = sqlite3.Row
     return db
 
+def now():
+    return time.time()
+
 def init_db():
     db = get_db()
     # tabla users principal (crea si no existe)
@@ -31,16 +34,19 @@ def init_db():
                 db.execute(f"UPDATE users SET {col_name} = ?", (default,))
             db.commit()
         except Exception:
-            # columna ya existe o no se puede añadir: ignorar
             pass
 
-    # columnas para seguridad
-    try_add("last_save_ts", "REAL", 0)          # timestamp del último save
-    try_add("last_coins", "REAL", 0)            # coins en el último save
-    try_add("save_count_min", "INTEGER", 0)     # saves en el último minuto
-    try_add("suspicious_count", "INTEGER", 0)   # contador de sospechas
-    try_add("banned_until", "REAL", 0)          # timestamp hasta el que está baneado (0 = no)
-    try_add("last_ip", "TEXT", "")              # última IP usada
+    # columnas para seguridad y leaderboard
+    try_add("last_save_ts", "REAL", 0)
+    try_add("last_coins", "REAL", 0)
+    try_add("save_count_min", "INTEGER", 0)
+    try_add("suspicious_count", "INTEGER", 0)
+    try_add("banned_until", "REAL", 0)
+    try_add("last_ip", "TEXT", "")
+    try_add("highscore_coins", "REAL", 0)  # para leaderboard
+    try_add("max_cps_record", "REAL", 0)    # mejor CPS registrado
+    try_add("best_cps", "REAL", 0)
+
 
     # tabla de logs de seguridad
     db.execute("""
@@ -55,10 +61,21 @@ def init_db():
     """)
     db.commit()
 
-    # índice para consultas rápidas
+    # tabla de eventos de click (registro por click)
+    db.execute("""
+        CREATE TABLE IF NOT EXISTS click_events (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER,
+            ts REAL,
+            ip TEXT
+        )
+    """)
+    db.commit()
+
+    # índices para consultas rápidas
     try:
+        db.execute("CREATE INDEX IF NOT EXISTS idx_click_user_ts ON click_events(user_id, ts)")
         db.execute("CREATE INDEX IF NOT EXISTS idx_security_user ON security_logs(user_id)")
         db.commit()
     except Exception:
         pass
-

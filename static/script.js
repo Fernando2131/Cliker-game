@@ -95,11 +95,34 @@ function updateDisplay() {
 
 // Función para hacer click
 document.addEventListener("DOMContentLoaded", function(){
-    document.getElementById('clickButton').onclick = () => {
-        coins += clickValue * multiplier;
-        updateDisplay();
-        saveState();
+    
+        document.getElementById("leaderboardButton").onclick = () => {
+        window.location.href = "/leaderboard";
     };
+
+    document.getElementById('clickButton').onclick = () => {
+    coins += clickValue * multiplier;
+    updateDisplay();
+
+    // --- ANTI-HACK CLICK / CPS DETECTOR ---
+    fetch("/api/click", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ts: Date.now() })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.error) {
+            console.warn("⚠ Click bloqueado:", data.error);
+        } else if (data.cps) {
+            // Puedes mostrarlo si quieres: console.log("CPS actual:", data.cps);
+        }
+    })
+    .catch(() => {});
+
+    // Ya NO guardamos en cada click (solo periódico)
+};
+
 
     document.getElementById('rebirthButton').onclick = () => {
         if (coins >= rebirthCost && rebirthCount < 10) {

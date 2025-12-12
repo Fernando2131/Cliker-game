@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaderboard Global</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f0f0f0;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 { margin-bottom: 30px; }
+        table {
+            width: 60%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 0 10px #aaa;
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #4CAF50;
+            color: white;
+        }
+        tr:hover { background: #e8e8e8; }
+    </style>
+</head>
+<body>
+
+    <h1>🌍 Leaderboard Global</h1>
+    <p><a href="/juego">Volver al juego</a></p>
+
+    <!-- TOP POR MONEDAS -->
+    <h2>🏆 Top 10 por Monedas</h2>
+    <table>
+        <tr><th>Jugador</th><th>Monedas</th></tr>
+        {% for u in top_coins %}
+        <tr>
+            <td>{{ u.username }}</td>
+            <td>{{ "%.7f"|format(u.coins) }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- TOP POR REBIRTHS -->
+    <h2>🔥 Top 10 por Rebirths</h2>
+    <table>
+        <tr><th>Jugador</th><th>Rebirths</th></tr>
+        {% for u in top_rebirths %}
+        <tr>
+            <td>{{ u.username }}</td>
+            <td>{{ u.rebirths }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- TOP POR CPS -->
+    <h2>⚡ Top 10 por CPS (Clicks por segundo)</h2>
+    <table>
+        <tr><th>Jugador</th><th>CPS Máximo</th></tr>
+        {% for u in top_cps %}
+        <tr>
+            <td>{{ u.username }}</td>
+            <td>{{ u.best_cps }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>
