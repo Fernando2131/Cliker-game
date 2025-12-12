@@ -1,0 +1,8 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg,#f7f7f7,#e2e8f0);
+    color: #111;
+    margin: 0;
+    padding: 20px;
+}
+#gameContainer { max-width: 900px; margin: 0 auto; }

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Clicks</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        /* keep original styles but allow overrides from styles.css */
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #f0f0f0; margin: 0; padding: 20px; color: #111;}
+        #clickButton { font-size: 24px; padding: 20px; margin: 20px; background-color: #4CAF50; color: white; border: none; border-radius: 10px; cursor: pointer; }
+        #coinsDisplay { font-size: 32px; margin: 20px; }
+        .upgrade { margin: 10px; padding: 10px; background-color: #ddd; border-radius: 5px; }
+        button { padding: 10px; margin: 5px; cursor: pointer; }
+        #rebirthButton { background-color: #ff5722; color: white; font-size: 18px; }
+    </style>
+</head>
+<body>
+    <h1>Juego de Clicks</h1>
+    <div id="coinsDisplay">Monedas: 0.0000000</div>
+    <button id="clickButton">¡Haz Click!</button>
+
+    <h2>Mejoras Activas (Multiplicadores)</h2>
+    <div id="activeUpgrades"></div>
+
+    <h2>Mejoras Pasivas</h2>
+    <div id="passiveUpgrades"></div>
+
+    <h2>Rebirth</h2>
+    <div id="rebirthInfo">Rebirths: 0/10 | Costo: 1,000,000.00</div>
+    <button id="rebirthButton">Hacer Rebirth</button>
+
+    <p><a href="/logout">Cerrar sesión</a></p>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
