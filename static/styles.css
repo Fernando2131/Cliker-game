@@ -5,4 +5,110 @@ body {
     margin: 0;
     padding: 20px;
 }
-#gameContainer { max-width: 900px; margin: 0 auto; }
+
+/* ===== COMBO ===== */
+#comboDisplay {
+    transition: transform 0.1s ease;
+}
+
+.comboActiveAnim {
+    transform: scale(1.25);
+}
+
+/* ===== WORKERS ===== */
+
+.worker {
+    position: absolute;
+    font-size: 32px;
+    user-select: none;
+    cursor: pointer;
+}
+
+/* animación caminar */
+.walking {
+    animation: walkCycle 0.35s infinite;
+}
+
+@keyframes walkCycle {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-4px); }
+    100% { transform: translateY(0px); }
+}
+
+/* salto */
+.jump {
+    animation: jumpAnim 0.4s ease;
+}
+
+@keyframes jumpAnim {
+    0%   { transform: translateY(0px); }
+    30%  { transform: translateY(-25px); }
+    100% { transform: translateY(0px); }
+}
+
+/* columnas de workers */
+.workersColumn {
+    position: fixed;
+    top: 140px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#workersLeft {
+    left: 10px;
+}
+
+#workersRight {
+    right: 10px;
+}
+
+/* contenedor principal */
+#gameContainer {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.ad-slot {
+    margin: 20px auto;
+    text-align: center;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.ad-top { margin-bottom: 30px; }
+.ad-middle { margin: 40px 0; }
+.ad-bottom { margin-top: 40px; }
+
+
+.rebirth-lock {
+    pointer-events: none;
+    user-select: none;
+}
+
+#rebirthAdOverlay {
+    pointer-events: all; /* el overlay sigue funcionando */
+
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#rebirthAdBox {
+    background: #111;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+    max-width: 90%;
+}
+
+#rebirthCountdown {
+    font-size: 20px;
+    margin-top: 10px;
+}
+

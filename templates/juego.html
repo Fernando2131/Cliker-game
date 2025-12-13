@@ -5,70 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juego de Clicks</title>
     <link rel="stylesheet" href="/static/styles.css">
-    <style>
-        /* keep original styles but allow overrides from styles.css */
-        body { font-family: Arial, sans-serif; text-align: center; background-color: #f0f0f0; margin: 0; padding: 20px; color: #111;}
-        #clickButton { font-size: 24px; padding: 20px; margin: 20px; background-color: #4CAF50; color: white; border: none; border-radius: 10px; cursor: pointer; }
-        #coinsDisplay { font-size: 32px; margin: 20px; }
-        .upgrade { margin: 10px; padding: 10px; background-color: #ddd; border-radius: 5px; }
-        button { padding: 10px; margin: 5px; cursor: pointer; }
-        #rebirthButton { background-color: #ff5722; color: white; font-size: 18px; }
-        
-        #leaderboardButton {
-    background-color: #2196F3;
-    color: white;
-    font-size: 18px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-bottom: 10px;
-}
-
-#leaderboardButton:hover {
-    background-color: #0b7dda;
-}
-
-    </style>
 </head>
+
 <body>
+
+<p style="font-size:12px; opacity:0.6;">
+Este sitio usa anuncios de terceros.
+</p>
+
+<!-- OVERLAY REBIRTH -->
+<div id="rebirthAdOverlay" style="display:none;">
+    <div id="rebirthAdBox">
+        <p>Rebirth en progreso...</p>
+        <div id="rebirthAdContainer"></div>
+        <p id="rebirthCountdown">5</p>
+    </div>
+</div>
+
+<div id="gameContainer">
+
     <h1>Juego de Clicks</h1>
+
     <div id="coinsDisplay">Monedas: 0.0000000</div>
+
     <button id="clickButton">¡Haz Click!</button>
 
-    <h2>Mejoras Activas (Multiplicadores)</h2>
+    <div id="comboDisplay">Clicks en combo: 0/50</div>
+
+    <h2>Mejoras Activas</h2>
     <div id="activeUpgrades"></div>
 
     <h2>Mejoras Pasivas</h2>
     <div id="passiveUpgrades"></div>
 
+    <h2>Workers</h2>
+
+    <div id="workersArea" style="position:relative; height:140px;">
+        <div id="workersLeft" class="workersColumn"></div>
+        <div id="workersRight" class="workersColumn"></div>
+    </div>
+
     <h2>Rebirth</h2>
     <div id="rebirthInfo">Rebirths: 0/10 | Costo: 1,000,000.00</div>
     <button id="rebirthButton">Hacer Rebirth</button>
-    
-<button id="leaderboardButton">🌍 Ver Leaderboard</button>
+
+    <br><br>
+
+    <button id="leaderboardButton">🌍 Ver Leaderboard</button>
 
     <p><a href="/logout">Cerrar sesión</a></p>
+</div>
 
+<!-- ADS -->
+<div class="ad-slot ad-top">
+    <script src="https://pl28241374.effectivegatecpm.com/de/a1/a4/dea1a49544f1dfd5f6975aff9651ffcb.js"></script>
+</div>
 
-    <!-- ===================== -->
-    <!--     ADSTERRA ADS      -->
-    <!-- ===================== -->
+<div class="ad-slot ad-middle">
+    <script src="https://pl28241393.effectivegatecpm.com/79/25/ee/7925eeebc1dd1ede42db74ec00efa9f2.js"></script>
+</div>
 
-    <!-- Adsterra Ad Code 1 -->
-    <script
-      type="text/javascript"
-      src="https://pl28241374.effectivegatecpm.com/de/a1/a4/dea1a49544f1dfd5f6975aff9651ffcb.js"
-    ></script>
+<div class="ad-slot ad-bottom">
+    <script src="https://www.effectivegatecpm.com/z8bkwmms?key=d7f2c3a3120142cde0c11f993217db43"></script>
+</div>
 
-    <!-- Adsterra Ad Code 2 -->
-    <script
-      type="text/javascript"
-      src="https://pl28241393.effectivegatecpm.com/79/25/ee/7925eeebc1dd1ede42db74ec00efa9f2.js"
-    ></script>
+<script async data-cfasync="false"
+src="https://pl28253270.effectivegatecpm.com/a69782316e7713aa5dcb11e0c89b82ef/invoke.js"></script>
 
+<script type="text/javascript">
+atOptions = {
+    key : '22230ac7d576d7c8a5b9a670771b8aea',
+    format : 'iframe',
+    height : 90,
+    width : 728,
+    params : {}
+};
+</script>
 
-    <!-- Script del juego (debe ir SIEMPRE al final) -->
-    <script src="/static/script.js"></script>
+<script src="/static/script.js"></script>
+
 </body>
 </html>
